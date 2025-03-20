@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const userSchema = new Schema(
+const UserSchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -20,9 +21,10 @@ const userSchema = new Schema(
 		},
 		role: {
 			type: String,
-			required: true,
+			// required: true,
 			maxlength: 50,
 			enum: ["admin", "supplier", "officer"], // Optional: restrict roles to specific values
+			default: "admin",
 		},
 		created_at: {
 			type: Date,
@@ -38,4 +40,26 @@ const userSchema = new Schema(
 	}
 );
 
-module.exports = model("User", userSchema);
+// Hash the password before saving
+UserSchema.pre("save", async function (next) {
+	if (!this.isModified("password_hash")) return next();
+
+	const salt = await bcrypt.genSalt(10);
+	this.password_hash = await bcrypt.hash(this.password_hash, salt);
+	next();
+});
+
+UserSchema.statics.login = async function (email, password) {
+	try {
+		const user = await this.findOne({ email });
+
+		if (user && bcrypt.compareSync(password, user.password_hash)) {
+			return user;
+		}
+		throw new Error("Incorrect credentials");
+	} catch (error) {
+		throw error;
+	}
+};
+
+module.exports = model("User", UserSchema);

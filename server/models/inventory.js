@@ -16,6 +16,11 @@ const inventorySchema = new Schema(
 			required: true,
 			min: 0, // Ensure quantity is non-negative
 		},
+		status: {
+			type: String,
+			enum: ["In Stock", "Out of Stock"],
+			default: "In Stock",
+		},
 		unit_price: {
 			type: Number,
 			required: true,

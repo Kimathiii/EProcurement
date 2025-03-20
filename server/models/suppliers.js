@@ -7,10 +7,9 @@ const supplierSchema = new Schema(
 			required: true,
 			maxlength: 100,
 		},
-		contact_person: {
-			type: String,
+		items: {
+			type: Array,
 			required: true,
-			maxlength: 100,
 		},
 		email: {
 			type: String,
@@ -22,6 +21,7 @@ const supplierSchema = new Schema(
 			type: String,
 			required: true,
 			maxlength: 20,
+			unique: true,
 		},
 		address: {
 			type: String, // Using String for TEXT equivalent

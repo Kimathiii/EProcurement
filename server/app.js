@@ -7,7 +7,12 @@ const helmet = require("helmet");
 
 const app = express();
 
-app.use(cors());
+app.use(
+	cors({
+		origin: "http://localhost:5173", // frontend URL
+		credentials: true, // Allow cookies to be sent and received
+	})
+);
 
 // Security measures
 app.use(
@@ -32,8 +37,10 @@ app.use(cookieParser());
 
 const userRoute = require("./routes/users");
 const supplierRoute = require("./routes/suppliers");
+const inventoryRoute = require("./routes/inventory");
 
 app.use("/api/auth", userRoute);
 app.use("/api/suppliers", supplierRoute);
+app.use("/api/inventory", inventoryRoute);
 
 module.exports = app;

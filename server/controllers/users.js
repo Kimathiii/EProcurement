@@ -11,34 +11,42 @@ const generateToken = (payload) => {
 
 	return accessToken;
 };
+const authenticate = (req, res, next) => {
+	const authHeader = req.headers["authorization"];
+	const token = authHeader && authHeader.split(" ")[1];
+
+	if (!token) {
+		return res.status(401).json({ message: "No token provided" });
+	}
+
+	jwt.verify(token, SECRET_KEY, (err, user) => {
+		if (err) {
+			console.log(err.message);
+			return res.status(403).json({ message: "Invalid token" });
+		}
+
+		req.user = user;
+		next();
+	});
+};
 
 const signIn = async (req, res) => {
 	try {
 		const { email, password } = req.body;
 
 		// Check if the user exists
-		const user = await User.findOne({ email });
-		if (!user) {
-			return res.status(404).json({ message: "User not found" });
-		}
+		const user = await User.login(email, password);
 
-		// Compare the provided password with the stored hashed password
-		const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-		if (!isPasswordValid) {
-			return res.status(401).json({ message: "Invalid credentials" });
-		}
-
-		const accessToken = generateToken({ id: user._id, role: user.role });
+		const accessToken = generateToken({
+			id: user._id,
+			role: user.role,
+			name: user.name,
+			email: user.email,
+		});
 
 		res.status(200).json({
 			message: "Sign-in successful",
 			accessToken,
-			user: {
-				id: user._id,
-				name: user.name,
-				email: user.email,
-				role: user.role,
-			},
 		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -46,16 +54,16 @@ const signIn = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-	const { name, password_hash, email } = req.body;
+	const { name, password, email } = req.body;
 
-	if (!name || !password_hash || !email) {
+	if (!name || !password || !email) {
 		return res.status(400).json({ message: "All fields are required" });
 	}
 
 	try {
 		await User.create({
 			name,
-			password_hash,
+			password_hash: password,
 			email,
 		});
 
@@ -69,6 +77,7 @@ const getUser = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const user = await User.findById(id);
+		consolelog(user);
 		if (user) {
 			res.status(200).json({ user });
 		} else {
@@ -83,4 +92,5 @@ module.exports = {
 	signUp,
 	getUser,
 	signIn,
+	authenticate,
 };
