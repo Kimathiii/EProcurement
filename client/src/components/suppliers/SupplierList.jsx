@@ -1,30 +1,30 @@
 // import { useState } from "react";
 import OrderSkeleton from "../orders/OrderSkeleton";
 // import AddItem from "./AddItem";
-import { useEffect, useRef } from "react";
-import useFetch from "../../hooks/useFetch";
+// import { useEffect, useRef } from "react";
+// import useFetch from "../../hooks/useFetch";
 import edit from "../../assets/images/edit.png";
 
-const SupplierList = ({ suppliers, isOpen, setIsOpen }) => {
-	const modalRef = useRef(null);
+const SupplierList = ({ setSupplier, suppliers }) => {
+	// const modalRef = useRef(null);
 
-	const handleClose = (e) => {
-		const dimensions = modalRef.current?.getBoundingClientRect();
-		if (dimensions) {
-			if (
-				e.clientX < dimensions.left ||
-				e.clientX > dimensions.right ||
-				e.clientY < dimensions.top ||
-				e.clientY > dimensions.bottom
-			) {
-				setIsOpen(false);
-				modalRef.current?.close();
-			}
-		}
-	};
-	useEffect(() => {
-		if (isOpen) modalRef.current?.showModal();
-	}, [isOpen]);
+	// const handleClose = (e) => {
+	// 	const dimensions = modalRef.current?.getBoundingClientRect();
+	// 	if (dimensions) {
+	// 		if (
+	// 			e.clientX < dimensions.left ||
+	// 			e.clientX > dimensions.right ||
+	// 			e.clientY < dimensions.top ||
+	// 			e.clientY > dimensions.bottom
+	// 		) {
+	// 			setIsOpen(false);
+	// 			modalRef.current?.close();
+	// 		}
+	// 	}
+	// };
+	// useEffect(() => {
+	// 	if (isOpen) modalRef.current?.showModal();
+	// }, [isOpen]);
 	console.log(suppliers);
 	return (
 		<div className="text-slate-600">
@@ -44,6 +44,7 @@ const SupplierList = ({ suppliers, isOpen, setIsOpen }) => {
 							{suppliers?.map((supplier) => (
 								<ul
 									key={supplier._id}
+									onClick={() => setSupplier(supplier)}
 									className="flex justify-between items-center border-b py-2 px-4 hover:bg-gray-100 text-slate-700 relative"
 								>
 									{/* <li className="border-r pr-8 w-[130px] text-left">
