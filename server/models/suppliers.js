@@ -7,10 +7,19 @@ const supplierSchema = new Schema(
 			required: true,
 			maxlength: 100,
 		},
-		items: {
-			type: Array,
-			required: true,
-		},
+		items: [
+			{
+				name: {
+					type: String,
+					required: true,
+				},
+				price: {
+					type: Number,
+					required: true,
+					min: 0, // Ensure price is non-negative
+				},
+			},
+		],
 		email: {
 			type: String,
 			required: true,

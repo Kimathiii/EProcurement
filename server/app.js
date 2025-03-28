@@ -38,9 +38,11 @@ app.use(cookieParser());
 const userRoute = require("./routes/users");
 const supplierRoute = require("./routes/suppliers");
 const inventoryRoute = require("./routes/inventory");
+const orderRoute = require("./routes/order");
 
 app.use("/api/auth", userRoute);
 app.use("/api/suppliers", supplierRoute);
 app.use("/api/inventory", inventoryRoute);
+app.use("/api/orders", orderRoute);
 
 module.exports = app;

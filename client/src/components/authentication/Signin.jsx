@@ -3,12 +3,15 @@ import usePost from "../../hooks/usePost";
 import { useState, useRef, useEffect } from "react";
 import SubmitBtn from "./SubmitBtn";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axiosInstance";
 
 const Signin = () => {
 	const url = "/auth/signin";
 	const { post, loading } = usePost(url);
 	const [isDisabled, setIsDisabled] = useState(false);
 	const navigate = useNavigate();
+	const { setUser } = useAuthContext();
 
 	const [userDetails, setUserDetails] = useState({
 		email: "",
@@ -28,6 +31,12 @@ const Signin = () => {
 		try {
 			const { accessToken } = await post(userDetails);
 			localStorage.setItem("accessToken", accessToken);
+			const res = await axiosInstance.get("/auth/profile", {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				},
+			});
+			setUser(res.data);
 			navigate("/");
 		} catch (error) {
 			console.log(error);

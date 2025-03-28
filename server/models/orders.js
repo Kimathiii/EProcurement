@@ -2,11 +2,10 @@ const { Schema, model, Types } = require("mongoose");
 
 const orderSchema = new Schema(
 	{
-		order_number: {
-			type: String,
+		order_items: {
+			type: Array,
 			required: true,
-			unique: true,
-			maxlength: 50,
+			minlength: 1, // Ensure order items array is not empty
 		},
 		supplier_id: {
 			type: Types.ObjectId, // Reference to the Supplier model
@@ -23,6 +22,7 @@ const orderSchema = new Schema(
 			required: true,
 			maxlength: 50,
 			enum: ["pending", "completed"], // Optional: restrict status to specific values
+			default: "pending",
 		},
 		created_at: {
 			type: Date,

@@ -2,9 +2,14 @@ const Order = require("../models/orders");
 
 // Create a new order
 const createOrder = async (req, res) => {
+	const { order_items, supplier_id, total_amount } = req.body;
 	try {
-		const order = new Order(req.body);
-		await order.save();
+		// const order = new Order({order});
+		const order = await Order.create({
+			order_items,
+			supplier_id,
+			total_amount,
+		});
 		res.status(201).json({ message: "Order created successfully", order });
 	} catch (error) {
 		res.status(400).json({ error: error.message });
