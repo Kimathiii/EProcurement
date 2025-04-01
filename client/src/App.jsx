@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Items from "./components/items/Items";
 import Suppliers from "./components/suppliers/Suppliers";
 import Order from "./components/orders/Order";
+import Index from "./components/dashboard/Index";
 
 const App = () => {
 	return (
@@ -15,6 +16,7 @@ const App = () => {
 					<Route path="orders" element={<Order />} />
 					<Route path="inventory" element={<Items />} />
 					<Route path="suppliers" element={<Suppliers />} />
+					<Route path="/" element={<Index />} />
 				</Route>
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/signin" element={<Signin />} />

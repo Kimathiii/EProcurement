@@ -4,6 +4,7 @@ import SideNav from "../navigation/SideNav";
 // import useFetch from "../../hooks/useFetch";
 import { useAuthContext } from "../../context/AuthContext";
 import { useState } from "react";
+// import Index from "./Index";
 
 const Dashboard = () => {
 	// const { data: orders } = useFetch("/orders", "orders");
@@ -22,6 +23,7 @@ const Dashboard = () => {
 			)}
 			<NavBar />
 			<SideNav />
+
 			<Outlet />
 		</div>
 	);
