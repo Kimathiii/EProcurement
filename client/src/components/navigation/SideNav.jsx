@@ -14,7 +14,6 @@ const SideNav = () => {
 		"/orders",
 		"/suppliers",
 		"/transactions",
-		"/reports",
 	];
 
 	const handleLogOut = async () => {};
@@ -68,15 +67,6 @@ const SideNav = () => {
 				>
 					<img src={bill} alt="bill" className="w-5 h-5" />
 					<Link to="/transactions">Transactions</Link>
-				</li>
-				<li
-					className={`${
-						endpoints[5] === location.pathname &&
-						"bg-[#F1F1FF] border-l-4 border-l-[#8282F2]"
-					} mt-6 cursor-pointer p-2 rounded-r-lg pl-4 flex space-x-3 items-center`}
-				>
-					<img src={reports} alt="reports" className="w-5 h-5" />
-					<Link to="/reports">Reports</Link>
 				</li>
 			</ul>
 			<button

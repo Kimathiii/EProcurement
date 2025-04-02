@@ -43,17 +43,17 @@ const ItemsList = ({ items, isOpen, setIsOpen }) => {
 							{items?.map((item) => (
 								<ul
 									key={item._id}
-									className="flex justify-between items-center border-b py-2 px-4 hover:bg-gray-100 text-slate-700 relative"
+									className="flex justify-between items-center border-b border-gray-300 py-2 px-4 hover:bg-gray-100 text-slate-700 relative"
 								>
-									<li className="border-r pr-8 w-[130px] text-left">
+									<li className="border-r border-gray-300 pr-8 w-[130px] text-left">
 										#{item._id.slice(-8)}
 									</li>
 
-									<li className="border-r pl-8 pr-8 w-[180px] text-center -ml-16">
+									<li className="border-r border-gray-300 pl-8 pr-8 w-[180px] text-center -ml-16">
 										{item.name}
 									</li>
 
-									<li className="w-[130px] border-r ">
+									<li className="w-[130px] border-r  border-gray-300 ">
 										ksh {item?.unit_price}
 									</li>
 
@@ -61,10 +61,10 @@ const ItemsList = ({ items, isOpen, setIsOpen }) => {
 										{item.quantity}
 									</li>
 
-									<li className="w-[170px] -mr-8 border-l pl-8">
+									<li className="w-[170px] -mr-8 border-l border-gray-300 pl-8">
 										{item.supplier_id.name}
 									</li>
-									<li className="w-[180px] text-center -mr-8 border-l pl-8">
+									<li className="w-[180px] text-center -mr-8 border-l border-gray-300 pl-8">
 										<p
 											className={`${
 												item.status === "In Stock"
@@ -76,7 +76,7 @@ const ItemsList = ({ items, isOpen, setIsOpen }) => {
 										</p>
 									</li>
 
-									<li className=" border-l pl-10 w-[100px] flex space-x-4">
+									<li className="border-gray-300 border-l pl-10 w-[100px] flex space-x-4">
 										<img
 											src={edit}
 											alt="options"

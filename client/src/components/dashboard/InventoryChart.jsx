@@ -7,7 +7,7 @@ const InventoryChart = ({ inventoryData }) => {
 	}, {});
 
 	const inventoryChartData = {
-		labels: "", // Use statuses as labels
+		labels: "",
 		datasets: [
 			{
 				label: "Status",
@@ -19,7 +19,7 @@ const InventoryChart = ({ inventoryData }) => {
 					"#4BC0C0",
 					"#9966FF",
 					"#FF9F40",
-				], // Add more colors if needed
+				],
 			},
 		],
 	};

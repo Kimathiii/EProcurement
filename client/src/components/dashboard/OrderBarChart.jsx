@@ -9,7 +9,6 @@ import {
 	Legend,
 } from "chart.js";
 
-// Register Chart.js components
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
@@ -20,25 +19,22 @@ ChartJS.register(
 );
 
 const OrderBarChart = ({ orders }) => {
-	// Extract data for the chart
-	const labels = orders?.map((order) => order.supplier_id.name); // Supplier names as labels
-	const data = orders?.map((order) => order.total_amount); // Total amounts as data
+	const labels = orders?.map((order) => order.supplier_id.name);
+	const data = orders?.map((order) => order.total_amount);
 
-	// Define the chart data
 	const chartData = {
-		labels: labels, // Supplier names on the x-axis
+		labels: labels,
 		datasets: [
 			{
 				label: "Total Amount",
-				data: data, // Total amounts on the y-axis
-				backgroundColor: "#36A2EB", // Bar color
+				data: data,
+				backgroundColor: "#36A2EB",
 				borderColor: "rgba(75, 192, 192, 1)",
 				borderWidth: 1,
 			},
 		],
 	};
 
-	// Define chart options
 	const options = {
 		plugins: {
 			legend: {
@@ -53,7 +49,7 @@ const OrderBarChart = ({ orders }) => {
 			y: {
 				beginAtZero: true,
 				ticks: {
-					callback: (value) => `${value}`, // Format y-axis values as currency
+					callback: (value) => `${value}`,
 				},
 			},
 		},
@@ -62,7 +58,6 @@ const OrderBarChart = ({ orders }) => {
 	return (
 		<div className="w-[600px] mx-auto">
 			{" "}
-			{/* Fixed width of 600px */}
 			<Bar data={chartData} options={options} />
 		</div>
 	);
