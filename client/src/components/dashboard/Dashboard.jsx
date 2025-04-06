@@ -1,18 +1,40 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../navigation/NavBar";
 import SideNav from "../navigation/SideNav";
-// import useFetch from "../../hooks/useFetch";
 import { useAuthContext } from "../../context/AuthContext";
-import { useState } from "react";
-// import Index from "./Index";
+import { useState, useEffect } from "react";
 
 const Dashboard = () => {
-	// const { data: orders } = useFetch("/orders", "orders");
 	const { user } = useAuthContext();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [seconds, setSeconds] = useState(user === null ? 5 : 0);
 
-	if (seconds !== 0) setInterval(() => setSeconds(seconds - 1), 1000);
+	// Manage countdown timer
+	useEffect(() => {
+		if (user === null) {
+			const interval = setInterval(() => {
+				setSeconds((prev) => (prev > 0 ? prev - 1 : 0));
+			}, 1000);
+
+			// Cleanup interval on unmount
+			return () => clearInterval(interval);
+		}
+	}, [user]);
+
+	// Navigate to /signin after 5 seconds if user is not logged in
+	useEffect(() => {
+		if (user === null) {
+			const timeout = setTimeout(() => {
+				if (location?.pathname !== "/signup") {
+					navigate("/signin");
+				}
+			}, 5000);
+
+			// Cleanup timeout on unmount
+			return () => clearTimeout(timeout);
+		}
+	}, [user, location, navigate]);
 
 	return (
 		<div>
@@ -23,7 +45,6 @@ const Dashboard = () => {
 			)}
 			<NavBar />
 			<SideNav />
-
 			<Outlet />
 		</div>
 	);

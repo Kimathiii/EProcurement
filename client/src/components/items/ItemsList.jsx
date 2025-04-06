@@ -1,46 +1,48 @@
 // import { useState } from "react";
 import OrderSkeleton from "../orders/OrderSkeleton";
-import AddItem from "./AddItem";
-import { useEffect, useRef } from "react";
-import useFetch from "../../hooks/useFetch";
-import edit from "../../assets/images/edit.png";
+import axiosInstance from "../../utils/axiosInstance";
+import { useEffect, useState } from "react";
+import options from "../../assets/images/options.png";
 
-const ItemsList = ({ items, isOpen, setIsOpen }) => {
-	const modalRef = useRef(null);
+const ItemsList = ({ items }) => {
+	const [itemsArr, setItemsArr] = useState();
+	const [dropdownVisible, setDropdownVisible] = useState(null);
 
-	const handleClose = (e) => {
-		const dimensions = modalRef.current?.getBoundingClientRect();
-		if (dimensions) {
-			if (
-				e.clientX < dimensions.left ||
-				e.clientX > dimensions.right ||
-				e.clientY < dimensions.top ||
-				e.clientY > dimensions.bottom
-			) {
-				setIsOpen(false);
-				modalRef.current?.close();
-			}
+	useEffect(() => {
+		setItemsArr(items);
+	}, [items]);
+
+	const handleToggleDropdown = (itemId) => {
+		setDropdownVisible((prev) => (prev === itemId ? null : itemId));
+	};
+	const handleStatusChange = async (itemId, newStatus) => {
+		console.log(itemId, newStatus);
+		try {
+			const res = await axiosInstance.patch(`/inventory/update/${itemId}`, {
+				status: newStatus,
+			});
+			setItemsArr((prevItems) =>
+				prevItems.map(
+					(item) =>
+						item._id === itemId
+							? { ...item, status: newStatus } // Create a new object with updated reg_status
+							: item // Return the original order object
+				)
+			);
+		} catch (error) {
+			console.error("Failed to update status:", error.message);
 		}
 	};
-	useEffect(() => {
-		if (isOpen) modalRef.current?.showModal();
-	}, [isOpen]);
+
 	return (
 		<div className="text-slate-600">
-			<dialog
-				ref={modalRef}
-				onClick={handleClose}
-				className="border p-0 -mb-4 md:mb-auto py-5 px-6 w-full md:w-1/3 rounded-2xl max-w-[50ch] backdrop:opacity-50 backdrop:bg-black"
-			>
-				<AddItem />
-			</dialog>
 			{!items ? (
 				<OrderSkeleton />
 			) : (
 				<>
-					{items?.length ? (
+					{itemsArr?.length ? (
 						<div>
-							{items?.map((item) => (
+							{itemsArr?.map((item) => (
 								<ul
 									key={item._id}
 									className="flex justify-between items-center border-b border-gray-300 py-2 px-4 hover:bg-gray-100 text-slate-700 relative"
@@ -76,12 +78,41 @@ const ItemsList = ({ items, isOpen, setIsOpen }) => {
 										</p>
 									</li>
 
-									<li className="border-gray-300 border-l pl-10 w-[100px] flex space-x-4">
+									<li className="pl-10 w-[90px] flex space-x-4 relative">
 										<img
-											src={edit}
+											src={options}
 											alt="options"
-											className="w-4 h-4 opacity-55 cursor-pointer ml-6"
+											className="w-4 h-1 opacity-55 cursor-pointer ml-6"
+											onClick={() => handleToggleDropdown(item._id)}
 										/>
+
+										{/* Dropdown Menu */}
+										{dropdownVisible === item._id && (
+											<div className="absolute top-6 -left-4 bg-white w-28 rounded shadow-md p-2 z-10">
+												<ul className="text-sm text-gray-700">
+													{item.status === "Out of Stock" && (
+														<li
+															className="cursor-pointer hover:bg-gray-100 px-2 py-1"
+															onClick={() =>
+																handleStatusChange(item._id, "In Stock")
+															}
+														>
+															In Stock
+														</li>
+													)}
+													{item.status === "In Stock" && (
+														<li
+															className="cursor-pointer hover:bg-gray-100 px-2 py-1"
+															onClick={() =>
+																handleStatusChange(item._id, "Out of Stock")
+															}
+														>
+															Out of Stock
+														</li>
+													)}
+												</ul>
+											</div>
+										)}
 									</li>
 								</ul>
 							))}

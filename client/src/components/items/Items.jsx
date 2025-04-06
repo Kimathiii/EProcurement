@@ -12,7 +12,7 @@ const Items = () => {
 	const statuses = ["In Stock", "Out of Stock"];
 	const [status, setStatus] = useState("");
 	const [itemData, setItemData] = useState(items);
-	const [isOpen, setIsOpen] = useState(false);
+	// const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
 		if (statuses.includes(status)) {
@@ -24,22 +24,16 @@ const Items = () => {
 			setItemData(filteredItems);
 		} else {
 			setItemData(items);
-		}
+		} // This is where you would send the new item data to the backend if you have a backend set up. Just a placeholder for now. However, the actual logic would depend on your backend setup. For example, you might use a POST request with the new item data. The response from your backend would then be handled in the useEffect hook above. However, you would need to replace the console.log() with your actual POST request.  // You can also
 	}, [items, status]);
 
 	return (
 		<div className="ml-[17%] mt-[6%] w-[82%]">
 			<div className="flex justify-between">
-				<button
-					className="border text-slate-500 px-5 py-2 rounded-md my-2 hover:bg-gray-200 transform transition duration-200"
-					onClick={() => setIsOpen((prevValue) => !prevValue)}
-				>
-					Add new
-				</button>
 				<ItemsSort status={status} setStatus={setStatus} statuses={statuses} />
 			</div>
 			<ItemsHeader />
-			<ItemsList items={itemData || []} isOpen={isOpen} setIsOpen={setIsOpen} />
+			<ItemsList items={itemData || []} />
 			<Outlet />
 		</div>
 	);

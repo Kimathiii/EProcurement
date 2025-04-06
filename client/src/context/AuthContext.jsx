@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import { isAxiosError } from "axios";
 
@@ -9,8 +9,8 @@ const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
-	// const navigate = useNavigate();
-	// const location = useLocation();
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		const fetchProfile = async () => {
@@ -22,13 +22,10 @@ export const AuthProvider = ({ children }) => {
 				});
 				setUser(res.data);
 			} catch (error) {
-				// setTimeout(() => {
-				// 	if (location?.pathname !== "/signup") navigate("/signin");
-				// }, 6000);
-				if (isAxiosError(error) && error?.response) {
-					console.log("Error", error.response);
-					console.log(error?.response.data.message);
-				}
+				const timeout = setTimeout(() => {
+					if (location?.pathname !== "/signup") navigate("/signin");
+				}, 5000);
+				return () => clearTimeout(timeout);
 			}
 		};
 

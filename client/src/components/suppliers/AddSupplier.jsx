@@ -60,7 +60,10 @@ const AddSupplier = ({ setIsOpen }) => {
 		startTransition(async () => {
 			try {
 				const res = await post(supplier);
-				setIsOpen(false);
+				setTimeout(() => {
+					setIsOpen(false);
+				}, 500);
+				// clearTimeout(timeout);
 				console.log(res);
 			} catch (error) {
 				console.error("Error adding supplier:", error.message);
