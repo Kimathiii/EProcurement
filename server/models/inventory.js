@@ -7,10 +7,6 @@ const inventorySchema = new Schema(
 			required: true,
 			maxlength: 100,
 		},
-		description: {
-			type: String, // Using String for TEXT equivalent
-			required: true,
-		},
 		quantity: {
 			type: Number,
 			required: true,

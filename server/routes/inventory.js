@@ -11,7 +11,7 @@ const router = new Router();
 router.post("/add", createInventoryItem);
 router.get("/", getAllInventoryItems);
 router.get("/:id", getInventoryItemById);
-router.put("/:id", updateInventoryItem);
-router.delete("/:id", deleteInventoryItem);
+router.patch("/update/:inventoryId", updateInventoryItem);
+router.delete("/remove/:id", deleteInventoryItem);
 
 module.exports = router;
