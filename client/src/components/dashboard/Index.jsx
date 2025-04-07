@@ -7,12 +7,10 @@ import {
 } from "chart.js";
 import OrderBarChart from "./OrderBarChart";
 
-import { Bar, Doughnut, Pie, PolarArea } from "react-chartjs-2";
 import useFetch from "../../hooks/useFetch";
 // import { useContext } from "react";
 // import { AuthContext } from "../../App";
 import Recent from "./Recent";
-import { useEffect } from "react";
 import OrderChart from "./OrderChart";
 import InventoryChart from "./InventoryChart";
 import SupplierChart from "./SupplierChart";

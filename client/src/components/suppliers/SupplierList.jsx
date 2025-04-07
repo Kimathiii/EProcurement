@@ -46,7 +46,7 @@ const SupplierList = ({ setSupplier, suppliers }) => {
 						</div>
 					) : (
 						<p className="mt-5 text-center text-gray-500">
-							No Items yet available
+							No Suppliers yet available
 						</p>
 					)}
 				</>

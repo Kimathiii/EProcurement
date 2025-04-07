@@ -25,14 +25,9 @@ const Dashboard = () => {
 	// Navigate to /signin after 5 seconds if user is not logged in
 	useEffect(() => {
 		if (user === null) {
-			const timeout = setTimeout(() => {
-				if (location?.pathname !== "/signup") {
-					navigate("/signin");
-				}
-			}, 5000);
-
-			// Cleanup timeout on unmount
-			return () => clearTimeout(timeout);
+			if (location?.pathname !== "/signup") {
+				navigate("/signin");
+			}
 		}
 	}, [user, location, navigate]);
 
