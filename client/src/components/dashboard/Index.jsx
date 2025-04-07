@@ -8,8 +8,6 @@ import {
 import OrderBarChart from "./OrderBarChart";
 
 import useFetch from "../../hooks/useFetch";
-// import { useContext } from "react";
-// import { AuthContext } from "../../App";
 import Recent from "./Recent";
 import OrderChart from "./OrderChart";
 import InventoryChart from "./InventoryChart";

@@ -25,7 +25,7 @@ const SupplierChart = ({ supplierData }) => {
 
 	return (
 		<div className="flex items-center w-full justify-between bg-white p-4 rounded-lg">
-			{supplierData.length ? (
+			{supplierData?.length ? (
 				<div>
 					<p className="text-3xl font-bold text-blue-500">
 						{supplierData?.length
