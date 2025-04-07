@@ -5,6 +5,7 @@ import SubmitBtn from "./SubmitBtn";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
 	const url = "/auth/signin";
@@ -69,6 +70,9 @@ const Signin = () => {
 
 					<SubmitBtn loading={loading} isDisabled={isDisabled} />
 				</form>
+				<p className="mt-3 ml-4 text-gray-400">
+					Don't have an account? <Link to="/signup">Signup</Link>
+				</p>
 			</div>
 		</>
 	);
