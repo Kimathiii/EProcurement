@@ -64,7 +64,7 @@ const ItemsList = ({ items }) => {
 									</li>
 
 									<li className="w-[170px] -mr-8 border-l border-gray-300 pl-8">
-										{item.supplier_id.name}
+										{item?.supplier_id.name}
 									</li>
 									<li className="w-[180px] text-center -mr-8 border-l border-gray-300 pl-8">
 										<p

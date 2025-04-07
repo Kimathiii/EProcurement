@@ -2,7 +2,7 @@ import React, { useState, useTransition } from "react";
 import trash from "../../assets/images/trash.png";
 import usePost from "../../hooks/usePost";
 
-const AddSupplier = ({ setIsOpen }) => {
+const AddSupplier = ({ setIsOpen, setSupplierArr }) => {
 	const [supplier, setSupplier] = useState({
 		name: "",
 		email: "",
@@ -63,7 +63,7 @@ const AddSupplier = ({ setIsOpen }) => {
 				setTimeout(() => {
 					setIsOpen(false);
 				}, 500);
-				// clearTimeout(timeout);
+				setSupplierArr((prevSupplier) => [...prevSupplier, res.supplier]);
 				console.log(res);
 			} catch (error) {
 				console.error("Error adding supplier:", error.message);

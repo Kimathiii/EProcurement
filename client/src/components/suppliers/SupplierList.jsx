@@ -2,6 +2,7 @@ import OrderSkeleton from "../orders/OrderSkeleton";
 import edit from "../../assets/images/edit.png";
 
 const SupplierList = ({ setSupplier, suppliers }) => {
+	console.log(suppliers);
 	return (
 		<div className="text-slate-600">
 			{!suppliers ? (

@@ -14,13 +14,21 @@ const Suppliers = () => {
 	const { data: suppliers } = useFetch(`/suppliers/`, "suppliers");
 	const [supplier, setSupplier] = useState(null);
 	const [isOpen, setIsOpen] = useState(false);
+	const [supplierArr, setSupplierArr] = useState([]);
+
+	useEffect(() => {
+		setSupplierArr(suppliers);
+	}, [suppliers]);
 
 	return (
 		<div className="ml-[17%] mt-[6%] w-[82%]">
 			{!supplier ? (
 				<>
 					{isOpen ? (
-						<AddSupplier setIsOpen={setIsOpen} />
+						<AddSupplier
+							setIsOpen={setIsOpen}
+							setSupplierArr={setSupplierArr}
+						/>
 					) : (
 						<>
 							<button
@@ -30,7 +38,10 @@ const Suppliers = () => {
 								Add new
 							</button>
 							<SuppliersHeader />
-							<SupplierList suppliers={suppliers} setSupplier={setSupplier} />
+							<SupplierList
+								suppliers={supplierArr || []}
+								setSupplier={setSupplier}
+							/>
 						</>
 					)}
 				</>

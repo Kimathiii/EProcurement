@@ -44,6 +44,7 @@ const OrderList = ({ orders }) => {
 		}
 	};
 	console.log(ordersArr);
+	const handlePay = () => {};
 	return (
 		<div>
 			{ordersArr?.length ? (
@@ -63,7 +64,7 @@ const OrderList = ({ orders }) => {
 							{order.order_items.map((ord) => (
 								<ul key={ord._id}>
 									<li>
-										<li className="list-disc">{order.order_items[0].name}</li>
+										<li className="list-disc">{ord.name}</li>
 									</li>
 								</ul>
 							))}
@@ -86,6 +87,14 @@ const OrderList = ({ orders }) => {
 							{dropdownVisible === order._id && (
 								<div className="absolute top-6 left-0 bg-white border rounded shadow-md p-2 z-10">
 									<ul className="text-sm text-gray-700">
+										{order.status === "pending" && (
+											<li
+												className="cursor-pointer hover:bg-gray-100 px-2 py-1"
+												onClick={() => handleDelete(order._id)}
+											>
+												Pay
+											</li>
+										)}
 										<li
 											className="cursor-pointer hover:bg-gray-100 px-2 py-1"
 											onClick={() => handleDelete(order._id)}
