@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
 	cors({
-		origin: "http://localhost:5173", // frontend URL
+		origin: "https://e-procurement-seven.vercel.app/", // frontend URL
 		credentials: true, // Allow cookies to be sent and received
 	})
 );
