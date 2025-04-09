@@ -4,9 +4,10 @@ const cors = require("cors");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
+const authRoute = require("./routes/authentication"); // Import the authentication route
 
 const app = express();
-
+app.use("/api/auth", authRoute);
 app.use(
 	cors({
 		origin: "http://localhost:5173", // frontend URL

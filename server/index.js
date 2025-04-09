@@ -1,5 +1,8 @@
 const app = require("./app");
 const { connect } = require("mongoose");
+const dotenv = require("dotenv");
+require("dotenv").config();
+
 const { API_PORT, MONGO_URI } = process.env;
 const port = process.env.PORT || API_PORT;
 
