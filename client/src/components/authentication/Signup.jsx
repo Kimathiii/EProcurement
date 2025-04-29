@@ -5,34 +5,53 @@ import usePost from "../../hooks/usePost";
 import SubmitBtn from "./SubmitBtn";
 
 const Signup = () => {
-	const [userDetails, setUserDetails] = useState(null);
-	const handleChange = (e) => {
-		setUserDetails({
-			...userDetails,
-			[e.target.name]: e.target.value,
-		});
-	};
+	const [userDetails, setUserDetails] = useState({
+		name: "",
+		email: "",
+		password: "",
+	});
+	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
 	const url = "/auth/signup";
 	const { post, loading } = usePost(url);
 
+	const handleChange = (e) => {
+		setUserDetails({
+			...userDetails,
+			[e.target.name]: e.target.value,
+		});
+		// Clear error when user starts typing
+		if (error) setError("");
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(userDetails);
-
+		setError(""); // Clear previous errors
+		
 		try {
 			await post(userDetails);
 			navigate("/signin");
 		} catch (error) {
 			console.log(error);
+			if (error.message) {
+				setError(error.message);
+			} else {
+				setError("Failed to create account. Please try again.");
+			}
 		}
 	};
 
 	return (
-		<div className=" justify-between items-center mt-28 mx-auto w-1/3 p-4 bg-white rounded-lg">
+		<div className="justify-between items-center mt-28 mx-auto w-1/3 p-4 bg-white rounded-lg">
 			<Introduction />
 			<form className="p-4" onSubmit={handleSubmit}>
+				{/* Display error message if it exists */}
+				{error && (
+					<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+						{error}
+					</div>
+				)}
 				<div className="flex space-x-3 w-full">
 					<input
 						type="text"
@@ -40,6 +59,7 @@ const Signup = () => {
 						placeholder="name"
 						onChange={handleChange}
 						className="border border-neutral-400 mb-4 p-3 rounded-lg w-full focus:outline-none"
+						required
 					/>
 				</div>
 				<input
@@ -48,6 +68,7 @@ const Signup = () => {
 					placeholder="email"
 					onChange={handleChange}
 					className="border border-neutral-400 mb-4 p-3 rounded-lg w-full focus:outline-none"
+					required
 				/>
 				<input
 					type="password"
@@ -56,6 +77,7 @@ const Signup = () => {
 					minLength={8}
 					onChange={handleChange}
 					className="border border-neutral-400 mb-4 p-3 rounded-lg w-full focus:outline-none"
+					required
 				/>
 				<SubmitBtn loading={loading} />
 			</form>
